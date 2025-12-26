@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>林润茏：今晚的处刑邀请函 (Final)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f3ff; /* 赛博蓝 */
+            --danger: #ff003c;  /* 警告红 */
+            --warning: #fcee0a; /* 故障黄 */
+            --purple: #bc13fe;
+            --bg: #050505;
+            --panel: rgba(20, 20, 20, 0.92);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 80px;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .shake-screen { animation: shake 0.5s; }
+
+        /* --- 0. 伪装层 --- */
+        #intro-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #fff; color: #000; z-index: 9999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .official-badge { font-size: 4rem; color: #d4af37; margin-bottom: 20px; animation: float 3s ease-in-out infinite;}
+        @keyframes float { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+        .start-btn { padding: 15px 40px; border: 2px solid #000; background: transparent; font-size: 1.2rem; cursor: pointer; transition: 0.3s; font-weight: bold;}
+        .start-btn:hover { background: #000; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        /* --- 主内容 --- */
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; opacity: 0; transform: translateY(20px); transition: 1s; }
+        
+        .header-glitch { text-align: center; margin-bottom: 30px; }
+        .header-glitch h1 { font-size: 2.2rem; color: var(--danger); text-transform: uppercase; letter-spacing: 2px; text-shadow: 3px 3px 0px rgba(0,243,255,0.3); margin: 0;}
+        .header-glitch p { color: #666; font-family: monospace; margin-top: 5px; }
+
+        .card {
+            background: var(--panel); border: 1px solid #333; border-radius: 12px;
+            padding: 20px; margin-bottom: 25px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+        }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        .card.danger::before { background: var(--danger); }
+        .card.fun::before { background: var(--purple); }
+        .card h2 { margin-top: 0; font-size: 1.2rem; color: #eee; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        
+        /* 热力图 */
+        .heatmap-container {
+            position: relative; width: 100%; height: 200px; background: #1a2a3a;
+            border-radius: 4px; overflow: hidden; margin-top: 15px;
+            background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .table-outline { width: 60%; height: 80%; border: 2px solid #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .heat-zone { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; background: var(--danger); filter: blur(25px); opacity: 0.8; animation: pulse-red 2s infinite; border-radius: 50%;}
+        @keyframes pulse-red { 0% {opacity: 0.6;} 50% {opacity: 0.9;} 100% {opacity: 0.6;} }
+
+        /* 老虎机 */
+        .slot-machine { background: #000; border: 4px solid #333; border-radius: 8px; padding: 15px; text-align: center; }
+        .slot-display { font-size: 1.5rem; color: var(--warning); font-weight: bold; min-height: 40px; margin-bottom: 15px; border-bottom: 1px dashed #555; padding-bottom: 10px; }
+        .spin-btn { background: var(--purple); color: #fff; border: none; padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px var(--purple); }
+        .spin-btn:active { transform: scale(0.95); }
+
+        /* 商品 */
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .shop-item { background: #222; border: 1px solid #444; padding: 10px; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .shop-item.selected { border-color: var(--primary); background: rgba(0, 243, 255, 0.1); }
+        .shop-icon { font-size: 2rem; margin-bottom: 5px; display: block; }
+        .shop-name { font-size: 0.8rem; color: #ccc; }
+
+        /* 3D 游戏容器 */
+        #game-wrapper { width: 100%; height: 350px; background: #000; position: relative; border: 1px solid #444; overflow: hidden;}
+        #game-msg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: var(--danger); font-size: 3rem; font-weight: 900; opacity: 0; pointer-events: none; white-space: nowrap;
+            text-shadow: 0 0 10px #000; z-index: 20; transition: opacity 0.1s;
+        }
+
+        /* 签字 */
+        .signature-pad { background: #fff; border-radius: 4px; cursor: crosshair; touch-action: none; width: 100%; height: 120px; display: block; }
+
+        /* 底部 */
+        .marquee-footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 40px;
+            background: var(--danger); color: #fff; line-height: 40px;
+            font-family: monospace; overflow: hidden; white-space: nowrap;
+            z-index: 100; font-weight: bold; border-top: 2px solid #000;
+        }
+        .marquee-content { display: inline-block; padding-left: 100%; animation: scroll 20s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 10px;}
+        .btn-submit { background: var(--primary); color: #000; box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+        .btn-run { background: #333; color: #777; transition: 0.05s; position: relative;}
+
+        .mock-toast {
+            position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9); color: var(--danger); border: 2px solid var(--danger);
+            padding: 20px; font-size: 2rem; font-weight: bold; z-index: 2000;
+            display: none; white-space: nowrap;
+        }
+    </style>
+    <script src="https://cdn.bootcdn.net/ajax/libs/three.js/0.146.0/three.min.js"></script>
+</head>
+<body>
+
+<div id="intro-layer">
+    <div class="official-badge"><i class="fas fa-hand-holding-medical"></i></div>
+    <h2 style="margin:0">社区关爱中心</h2>
+    <h1 style="margin:10px 0">乒乓球困难户帮扶计划</h1>
+    <p>建档立卡对象：林润茏</p>
+    <button class="start-btn" onclick="enterSite()">接受援助</button>
+</div>
+
+<div id="toast" class="mock-toast">太菜了！</div>
+
+<div class="container" id="main-app">
+    
+    <div class="header-glitch">
+        <h1>⚠️ 实力差距确认书</h1>
+        <p>MISSION: DESTROY LIN_RUNLONG | 20:00 TONIGHT</p>
+    </div>
+
+    <div class="card danger">
+        <h2><i class="fas fa-crosshairs"></i> 大数据分析：你的防守盲区</h2>
+        <p>AI 已模拟了 1000 场比赛，这是你在球台上的“死亡区域”：</p>
+        <div class="heatmap-container">
+            <div class="table-outline"></div>
+            <div class="heat-zone"></div>
+            <div style="position: absolute; bottom: 5px; left: 5px; color: #fff; font-size: 0.7rem; font-family: monospace;">
+                COVERAGE: 100% DEADLY
+            </div>
+        </div>
+        <p style="font-size: 0.8rem; color: #999; margin-top: 5px; text-align: center;">(红色代表你接不到球的区域，也就是全台)</p>
+    </div>
+
+    <div class="card fun">
+        <h2><i class="fas fa-dice"></i> 赛后借口自动生成器</h2>
+        <p>为了避免你输了 11:0 之后尴尬，请提前抽取你的“输球理由”：</p>
+        <div class="slot-machine">
+            <div class="slot-display" id="excuse-text">???</div>
+            <button class="spin-btn" onclick="spinExcuse()"><i class="fas fa-sync"></i> 生成借口</button>
+        </div>
+    </div>
+
+    <div class="card danger">
+        <h2><i class="fas fa-gamepad"></i> VR体验：接发球模拟</h2>
+        <p>滑动屏幕控制球拍。注意：球速已放慢，如果你还接不到，那就没救了。</p>
+        <div id="game-wrapper"></div>
+        <div id="game-msg">太慢了!</div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-shopping-cart"></i> 赛后关怀套餐 (自费)</h2>
+        <p>请选择你被暴打之后需要的服务：</p>
+        <div class="shop-grid">
+            <div class="shop-item" onclick="selectItem(this)">
+                <span class="shop-icon">🧻</span>
+                <div class="shop-name">强力吸水纸巾<br>(擦泪专用)</div>
+            </div>
+            <div class="shop-item" onclick="selectItem(this)">
+                <span class="shop-icon">💊</span>
+                <div class="shop-name">速效救心丸<br>(防比分过大)</div>
+            </div>
+            <div class="shop-item" onclick="selectItem(this)">
+                <span class="shop-icon">🚗</span>
+                <div class="shop-name">滴滴代驾<br>(腿软回不去)</div>
+            </div>
+            <div class="shop-item" onclick="selectItem(this)">
+                <span class="shop-icon">📖</span>
+                <div class="shop-name">《乒乓球入门》<br>(建议重修)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="border-left-color: #fff;">
+        <h2><i class="fas fa-file-contract"></i> 签署《被虐免责协议》</h2>
+        <p>本人自愿接受今晚的毒打，且承诺不哭不闹。</p>
+        <canvas class="signature-pad" id="sig-pad"></canvas>
+        <div style="display:flex; justify-content:space-between; margin-top:5px;">
+            <span style="font-size:0.7rem; color:#666;">*法律效力等同于卖身契</span>
+            <button onclick="clearPad()" style="background:#333; color:#fff; border:none; padding:2px 10px; border-radius:4px;">重写</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button class="btn btn-submit" onclick="submitForm()">
+            <i class="fas fa-skull"></i> 确认应战 (20:00)
+        </button>
+        <button class="btn btn-run" id="run-btn" onclick="dodge(this)">
+            太可怕了，我要退赛
+        </button>
+    </div>
+</div>
+
+<div class="marquee-footer">
+    <div class="marquee-content">
+        📢 突发新闻：博彩公司已关闭“林润茏胜”的投注通道，原因是“不可能发生的事件” &nbsp;&nbsp;|&nbsp;&nbsp; 
+        🌤 天气预报：球馆局部地区将下起乒乓球雨 &nbsp;&nbsp;|&nbsp;&nbsp; 
+        🚑 友情提示：林子胜的反手已完成充能 &nbsp;&nbsp;|&nbsp;&nbsp; 
+        📉 数据更新：你的胜率稳定在 0.00%
+    </div>
+</div>
+
+<script>
+    // --- 0. 进场 ---
+    function enterSite() {
+        document.getElementById('intro-layer').style.transform = 'translateY(-100%)';
+        setTimeout(() => {
+            document.getElementById('main-app').style.opacity = 1;
+            document.getElementById('main-app').style.transform = 'translateY(0)';
+            init3DGame();
+        }, 500);
+    }
+
+    // --- 1. 嘲讽系统 ---
+    function shakeAndMock(text) {
+        document.body.classList.add('shake-screen');
+        const toast = document.getElementById('toast');
+        toast.innerText = text;
+        toast.style.display = 'block';
+        setTimeout(() => {
+            document.body.classList.remove('shake-screen');
+            toast.style.display = 'none';
+        }, 1000);
+    }
+
+    // --- 2. 老虎机 ---
+    const excuses = ["地太滑了", "球太圆了", "灯光太刺眼", "球拍没粘好", "昨晚落枕了", "风水不好", "不想赢太惨", "让你的", "早饭没吃饱", "球网太高了"];
+    let spinning = false;
+    function spinExcuse() {
+        if(spinning) return;
+        spinning = true;
+        const display = document.getElementById('excuse-text');
+        let count = 0;
+        const interval = setInterval(() => {
+            display.innerText = excuses[Math.floor(Math.random() * excuses.length)];
+            count++;
+            if(count > 15) {
+                clearInterval(interval);
+                spinning = false;
+                shakeAndMock("借口生成成功！");
+                display.style.color = "#00f3ff";
+            }
+        }, 100);
+    }
+
+    // --- 3. 购物车 ---
+    function selectItem(el) {
+        document.querySelectorAll('.shop-item').forEach(item => item.classList.remove('selected'));
+        el.classList.add('selected');
+        shakeAndMock("很有自知之明！");
+    }
+
+    // --- 4. 逃逸按钮 ---
+    function dodge(btn) {
+        const x = (Math.random() - 0.5) * 200;
+        const y = (Math.random() - 0.5) * 100;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+        btn.style.background = "#550000";
+        btn.innerText = "想得美 嘻嘻";
+    }
+
+    // --- 5. 签字 ---
+    const canvas = document.getElementById('sig-pad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        ctx.scale(ratio, ratio);
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 3;
+    }
+    setTimeout(resizeCanvas, 500);
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+    ['mousedown', 'touchstart'].forEach(ev => {
+        canvas.addEventListener(ev, (e) => { isDrawing = true; ctx.beginPath(); ctx.moveTo(getPos(e).x, getPos(e).y); e.preventDefault(); }, {passive:false});
+    });
+    ['mousemove', 'touchmove'].forEach(ev => {
+        canvas.addEventListener(ev, (e) => { if(isDrawing) { ctx.lineTo(getPos(e).x, getPos(e).y); ctx.stroke(); } e.preventDefault(); }, {passive:false});
+    });
+    ['mouseup', 'touchend'].forEach(ev => canvas.addEventListener(ev, () => isDrawing = false));
+    function clearPad() { ctx.clearRect(0, 0, canvas.width, canvas.height); resizeCanvas(); }
+
+    function submitForm() { alert("预约成功！\n\nVIP 担架已就位。\n今晚 20:00，不见不散！"); }
+
+    // --- 6. 3D 游戏 (修正物理引擎版) ---
+    function init3DGame() {
+        const container = document.getElementById('game-wrapper');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.Fog(0x000000, 1, 15);
+        
+        // 调整相机角度，俯视一点，看清桌面
+        const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 100);
+        camera.position.set(0, 2.5, 4.5); 
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // 灯光
+        const light = new THREE.PointLight(0xffffff, 1.2, 20);
+        light.position.set(0, 5, 2);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // 蓝色地板网格
+        scene.add(new THREE.GridHelper(30, 30, 0x111111, 0x050505));
+        
+        // 球桌 (深蓝色台面)
+        const tableGeo = new THREE.BoxGeometry(3, 0.15, 5.4); // 标准比例
+        const tableMat = new THREE.MeshPhongMaterial({color: 0x1E3F5A, specular: 0x111111});
+        const table = new THREE.Mesh(tableGeo, tableMat);
+        table.position.y = -0.1; // 桌面在 y=0 附近
+        scene.add(table);
+
+        // 球网
+        const netGeo = new THREE.PlaneGeometry(3.2, 0.3);
+        const netMat = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.5});
+        const net = new THREE.Mesh(netGeo, netMat);
+        net.position.set(0, 0.2, 0);
+        scene.add(net);
+
+        // 球拍 (玩家控制)
+        const paddle = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.6, 0.1), new THREE.MeshBasicMaterial({color: 0x00f3ff, transparent:true, opacity:0.6}));
+        paddle.position.set(0, 0.3, 2.7); // 在近端
+        scene.add(paddle);
+
+        // 乒乓球
+        const ball = new THREE.Mesh(new THREE.SphereGeometry(0.08), new THREE.MeshBasicMaterial({color: 0xffff00}));
+        scene.add(ball);
+
+        let ballVel = new THREE.Vector3(0,0,0);
+        let active = true;
+
+        function resetBall() {
+            // 球从对面发过来
+            ball.position.set(0, 0.5, -2.5);
+            // 速度 Z: 向正方向飞(飞向玩家)
+            // 速度 Y: 微微向上发球，然后受重力下落
+            ballVel.set((Math.random()-0.5)*0.06, 0.05, 0.12); 
+        }
+        resetBall();
+
+        // 控制逻辑
+        function updatePaddle(clientX) {
+            const rect = container.getBoundingClientRect();
+            const x = ((clientX - rect.left) / rect.width * 2 - 1);
+            paddle.position.x = x * 2; // 限制范围
+        }
+        container.addEventListener('touchmove', (e) => { e.preventDefault(); updatePaddle(e.touches[0].clientX); }, {passive:false});
+        container.addEventListener('mousemove', (e) => { updatePaddle(e.clientX); });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if(active) {
+                // 1. 位置更新
+                ball.position.add(ballVel);
+                
+                // 2. 重力模拟 (关键修正：必须让球往下掉)
+                ballVel.y -= 0.003; 
+
+                // 3. 桌面反弹逻辑
+                // 如果球的高度低于桌面(y=0)，且在桌子范围内
+                if(ball.position.y < 0 && Math.abs(ball.position.z) < 2.7) {
+                    ball.position.y = 0; // 修正位置防穿模
+                    ballVel.y = Math.abs(ballVel.y) * 0.85; // 弹起，损耗一点能量
+                }
+
+                // 4. 核心玩法：躲避球拍 (嘲讽逻辑)
+                // 当球接近拍子所在的 Z 轴 (2.7左右)
+                if(ball.position.z > 2.0 && ball.position.z < 3.0) {
+                    const dist = Math.abs(ball.position.x - paddle.position.x);
+                    if(dist < 0.5) { // 如果快碰到了
+                        // 强制变向躲开
+                        if (ball.position.x > paddle.position.x) ball.position.x += 0.5;
+                        else ball.position.x -= 0.5;
+                        
+                        // 显示嘲讽字
+                        const msg = document.getElementById('game-msg');
+                        const texts = ["太慢了!", "空气球?", "就这?", "MISS", "老年手速"];
+                        msg.innerText = texts[Math.floor(Math.random()*texts.length)];
+                        msg.style.opacity = 1; 
+                        setTimeout(()=> msg.style.opacity=0, 600);
+                    }
+                }
+
+                // 5. 出界重置
+                if(ball.position.z > 4.5 || ball.position.y < -2) {
+                    resetBall();
+                }
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+    }
+</script>
+
+</body>
+</html>
